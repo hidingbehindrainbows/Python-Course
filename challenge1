@@ -1,0 +1,12 @@
+letters = 'abcdefghijklmnopqrstuvwxyz'
+#          01234567890123456789012345
+#                     1        2
+qpo = letters[16:13:-1]
+print(qpo)
+
+edcba = letters[4::-1]
+print(edcba)
+
+last_eight = letters[:-9:-1]
+
+print(last_eight)
