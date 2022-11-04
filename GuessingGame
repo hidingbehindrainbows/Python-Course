@@ -1,7 +1,6 @@
 import random
 highest = 10
 answer = random.randint(1, highest)
-print(answer) # TODO obv don't include in the actual game
 guess = (int(input(f"Please state your guess between 1 and {highest} and enter 0 to exit: ")))
 guess_count = 1
 while guess != 0:
