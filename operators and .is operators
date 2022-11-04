@@ -1,0 +1,24 @@
+# if and 
+name = input('What is your name? ')
+age = int(input("What is your age? "))
+if 18 <= age <= 30:
+    print("Welcome to the cruise " + name)
+elif age <18:
+    print("You are too young for this cruise " + name)
+else:
+    print("You are too old for this cruise " + name)
+
+    
+# selecting caps:
+
+quote = """
+Alright, but apart from the Sanitation, the Medicine, Education, Wine,
+Public Order, Irrigation, Roads, the Fresh-Water System,
+and Public Health, what have the Romans ever done for us?
+"""
+capitals = ''
+for characters in quote:
+    if not characters.islower() and characters.isalpha():
+        capitals = capitals + characters
+       
+print(capitals)
