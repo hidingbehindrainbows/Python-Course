@@ -1,0 +1,40 @@
+import random
+highest = 10
+answer = random.randint(1, highest)
+print(answer) # TODO obv don't include in the actual game
+guess = (int(input(f"Please state your guess between 1 and {highest} and enter 0 to exit: ")))
+guess_count = 1
+while guess != 0:
+    if guess < answer: 
+        print("Please guess higher")
+        guess = int(input("> "))
+        if guess == answer:
+            guess_count += 1
+            print(f'You got on the {guess_count} try, congrats.')
+            break
+        else: 
+            print("You're wrong, sorry.")
+            guess_count += 1
+            if guess_count == 5:
+                print("Your free 5 tries are over.")
+                break
+            else:
+                continue
+    elif guess > answer: 
+        print("Please guess lower.")
+        guess = int(input('> '))
+        if guess == answer: 
+            guess_count += 1
+            print(f'you got it, on the {guess_count} try')
+            break
+        else: 
+            print('you didnt get it')
+            guess_count += 1
+            if guess_count == 5:
+                print("Your free 5 tries are over.")
+                break
+            else:
+                continue
+    else: 
+        print("You got it on the first try, congrats!")
+        break
