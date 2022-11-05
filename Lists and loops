@@ -1,0 +1,16 @@
+print("Please choose from the options below.\n")
+choices_available = ['1.Learn Python', '2.Learn Java', '3.Watch Movies', '4.Go swimming', '5.Go to bed', '6.Eat something', '0.Exit']
+user_choice = -1
+for choice in choices_available:
+    print(choice)
+
+while user_choice != 0:
+    user_choice = int(input('> ')) - 1
+    if user_choice > 5:
+        print("That is not a valid option.\n")
+        for choice in choices_available:
+            print(choice)
+    else: 
+        print(f"you have chosen to {choices_available[user_choice]}")
+        break
+    
