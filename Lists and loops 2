@@ -1,0 +1,22 @@
+available_computer_parts = ['Monitor', 'mouse', 'keyboard', 'Graphics card', 'CPU', 'hdmi cable']
+computer_parts_chosen = []
+choice = -1
+valid_choices = range(1, len(available_computer_parts) +1)
+while True:
+    if choice == 0:
+        break
+    elif choice in valid_choices:
+        print(f'Adding {choice}: ')
+        index = choice - 1
+        part_chosen = available_computer_parts[index]
+        computer_parts_chosen.append(part_chosen)
+    else:
+        print()
+        print('Please choose from the following:')
+        for number, computer in enumerate(available_computer_parts):
+            print(f'{number + 1}: {computer}')
+    choice = int(input('Enter you choice please: '))
+if computer_parts_chosen == []:
+    print("You've not chosen anything.")
+else:
+    print(computer_parts_chosen)
