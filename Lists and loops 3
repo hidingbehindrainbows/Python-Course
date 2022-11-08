@@ -1,0 +1,57 @@
+data_size = int(input('Enter size of data: '))
+
+data = []
+
+for i in range(0, data_size):
+    x = int(input(f"Enter the {i+1}th number: "))
+    data.append(x)
+
+print(data)
+
+min_value = 100
+max_value = 300
+
+stop = 0
+dont_stop = 0
+data.sort()
+
+for index, value in enumerate(data):
+    if value > min_value:
+        stop = index
+        break
+
+del data[:stop]
+    
+for index, value in enumerate(data):
+    if value > max_value:
+        dont_stop = index 
+        break
+
+
+del data[dont_stop:len(data)]
+
+print(data)
+
+# Now another code that does the same thing, this is shorter but im not sure whether it is more efficient or the one above it.
+
+data_size = int(input('Enter size of data: '))
+
+data = []
+new_data = []
+
+for i in range(0, data_size):
+    x = int(input(f"Enter the {i+1}th number: "))
+    data.append(x)
+
+print(data)
+
+min_value = 100
+max_value = 300
+
+data.sort()
+
+for index, value in enumerate(data):
+    if value > min_value and  value <= max_value:
+        new_data.append(data[index])
+
+print(new_data) 
