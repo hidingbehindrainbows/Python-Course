@@ -1,7 +1,19 @@
 import random
+
+
+def check(prompt):
+    while True:
+        temp = input(prompt)
+        if temp.isnumeric():
+            return int(temp)
+        else:
+            print("This is not ok to type.")
+            continue
+
+
 highest = 10
 answer = random.randint(1, highest)
-guess = (int(input(f"Please state your guess between 1 and {highest} and enter 0 to exit: ")))
+guess = check('Please enter your choice: ')
 guess_count = 1
 while guess != 0:
     if guess < answer: 
