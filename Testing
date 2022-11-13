@@ -1,0 +1,28 @@
+LOW = 1
+HIGH = 1000
+
+
+def binary_search(answer,low,high):
+
+    guesses = 1
+    guess_number = 0
+
+    while True:
+        guesses = low + (high-low) // 2
+    
+        guess_number +=1
+   
+    
+        if guesses < answer:
+            low = guesses + 1
+        
+        elif guesses > answer:
+            high = guesses - 1
+        
+        else:
+            print(f"{guesses}:\t{guess_number}!")
+            break
+    
+    
+for i in range(LOW, HIGH+1):
+    binary_search(i, LOW, HIGH)
