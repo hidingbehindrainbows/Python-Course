@@ -1,0 +1,23 @@
+# We need an empty dictionary, to store and display the letter frequencies.
+word_count = {}
+ 
+# Text string
+text = "Later in the course, you'll see how to use the collections Counter class."
+test = []
+repeat = True
+for letters in text:
+    i=0
+    if letters.isalpha():
+        test.append(letters.lower())
+        if letters.casefold() in test:
+            i+= test.count(letters)
+            word_count[letters.casefold()] = i
+        else:
+            i+=1
+            word_count[letters.casefold()] = i  
+
+
+ 
+# Printing the dictionary
+for letter, count in sorted(word_count.items()):
+    print(letter, count)
