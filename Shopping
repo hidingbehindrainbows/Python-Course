@@ -1,0 +1,106 @@
+pantry = {
+    "chicken": 500,
+    "lemon": 2,
+    "cumin": 24,
+    "paprika": 18,
+    "chilli powder": 7,
+    "yogurt": 300,
+    "oil": 450,
+    "onion": 5,
+    "garlic": 9,
+    "ginger": 2,
+    "tomato puree": 1250,
+    "almonds": 75,
+    "rice": 500,
+    "coriander": 20,
+    "lime": 3,
+    "pepper": 8,
+    "egg": 6,
+    "pizza": 2,
+    "spam": 1,
+    "potatoes" : 50,
+    "salt" : 200,
+    "malt vinegar": 10,
+}
+
+recipes = {
+    "Butter chicken": {
+        "chicken": 50,
+        "lemon": 1,
+        "cumin": 1,
+        "paprika": 1,
+        "chilli powder": 2,
+        "yogurt": 250,
+        "oil": 50,
+        "onion": 1,
+        "garlic": 2,
+        "ginger": 3,
+        "tomato puree": 240,
+        "almonds": 25,
+        "rice": 360,
+        "coriander": 1,
+        "lime": 1,
+    },
+    "Chicken and chips": {
+        "chicken": 100,
+        "potatoes": 3,
+        "salt": 1,
+        "malt vinegar": 5,
+    },
+    "Pizza": {
+        "pizza": 1,
+    },
+    "Egg sandwich": {
+        "egg": 2,
+        "bread": 80,
+        "butter": 10,
+    },
+    "Beans on toast": {
+        "beans": 1,
+        "bread": 40,
+    },
+    "Spam a la tin": {
+        "spam": 1,
+        "tin opener": 1,
+        "spoon": 1,
+    },
+}
+
+
+
+def something(choice_func:str, recipes_in_func:dict,shopping_cart_in_func:dict):
+        chosen_recipie = {}
+        for key, values in recipes_in_func.items():
+                print(key)
+        choice_func = input("Whaddaya wanna eat? ")
+        for key, values in recipes_in_func.items():
+            if choice_func.casefold() == key.casefold():
+                chosen_recipie[choice_func] = values
+                print(f"Alright! Let's have some {key}!!!")
+                print('-'*100)
+                print
+                for ingredient, amount in values.items():
+                    if ingredient not in pantry:
+                        print(f"You don't have any {ingredient}!!")
+                        shopping_cart_in_func[ingredient] = shopping_cart_in_func.setdefault(ingredient,0) + amount
+                    elif int(amount) < int(pantry[ingredient]):
+                        pantry[ingredient] = int(pantry[ingredient]) - int(amount)
+                        print(f"You now have {pantry[ingredient]} amount of {ingredient} left in your pantry!")
+                    elif int(amount) > int(pantry[ingredient]):
+                        print(f".......Nevermind, you don't have enough {ingredient}")
+                        shopping_cart_in_func[ingredient] = shopping_cart_in_func.setdefault(ingredient,0) + amount
+                        print(f"You need to buy {amount} of {ingredient} to make this. This has been added to the shopping cart")
+                        print('-'*100)
+        return choice_func, shopping_cart_in_func
+                    
+
+
+
+shopping_cart = {}
+choice = ''
+while choice != '0':
+    choice, shopping_cart = something(choice, recipes,shopping_cart)
+
+print("Your entire shopping list is:")
+for ingredient,amount in shopping_cart.items():
+    print(f"{ingredient}:\t{amount}")        
