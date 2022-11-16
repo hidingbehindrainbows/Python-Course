@@ -20,7 +20,7 @@ def something(year:int, month: int, day: int):
                 else:
                     continue
     else:
-        print("The day is a saturday")
+        print("The day is a saturday") 
         
 
 
