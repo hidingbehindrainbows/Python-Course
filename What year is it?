@@ -1,0 +1,35 @@
+def something(year:int, month: int, day: int):
+    month_in_days = 0
+    months = (31,28,31,30,31,30,31,31,30,31,30,31)
+    week = ('Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday')   
+    for index in range(0,month-1):
+        month_in_days = month_in_days +  months[index]
+    year_in_days = int(365.25 * (year-1))
+    days = day + year_in_days + month_in_days
+    reminder = days % 7
+    if reminder in {1,2,3,4,5,6}:
+        for i in range(1,7):
+            if year % 4 == 0 and month >2:
+                if i == reminder:
+                    print(f'It is a {week[reminder+1]}.')
+                else:
+                    continue
+            else:
+                if i == reminder:
+                    print(f'It is a {week[reminder]}.')
+                else:
+                    continue
+    else:
+        print("The day is a saturday")
+        
+
+
+
+
+x = input("Enter the date with commas seperating the dates in yyyy/mm/dd format: ")
+date = "".join(x).split(",")
+yyyy =int(date[0])
+mm = int(date[1])
+dd = int(date[2])
+
+something(yyyy, mm, dd)
