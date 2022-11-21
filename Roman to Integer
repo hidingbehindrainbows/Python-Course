@@ -1,0 +1,19 @@
+input = input("Enter only Roman numbers please: ")
+
+
+
+def func(pinput):
+        dict1 = {'I': 1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}   
+        y=0
+        s = pinput.replace('XC', 'LXXXX').replace('IX','VIIII').replace('CM','DCCCC').replace('CD','CCCC').replace('IV','IIII')
+        for character in s:
+            if character in dict1:
+                y+=dict1[character]
+        return y
+        
+        
+        
+        
+x = func(input)
+        
+print(x)
