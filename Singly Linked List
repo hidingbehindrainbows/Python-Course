@@ -1,0 +1,155 @@
+from pyinputplus import inputInt
+
+class Node:
+    def __init__(self, value=None):
+        self.value = value
+        self.next= None
+
+
+class LinkedList:
+    def __init__(self):
+        self.start = None
+        self.tail = None
+
+    def insert_at_beginning(self, New_Node):
+        if self.start ==None:
+            self.start = New_Node
+            self.tail = New_Node
+        else:
+            New_Node.next = self.start
+            self.start = New_Node
+
+    def insert_at_end(self,New_Node):
+        if self.start == None:
+            self.start = New_Node
+            self.tail = New_Node
+        else:
+            self.tail.next = New_Node
+            self.tail = New_Node
+
+    def insert_at_pos(self, New_Node):
+        if self.start == None:
+            self.start = New_Node
+            self.tail = New_Node
+            return None
+        pos = inputInt("Enter position:\n")
+        i=1
+        Current_Node = self.start
+        while i<pos-1 and Current_Node.next != None:
+            i+=1
+            Current_Node = Current_Node.next
+        if i==pos-1:
+            New_Node.next = Current_Node.next
+            Current_Node.next = New_Node
+            return None
+        print("Invalid Position")
+
+    def delete_beg(self):
+        if self.start==None:
+            print("Nothing to delete")
+            return None
+        # Current_Node = self.start
+        # free space?
+        self.start = self.start.next
+    
+    def delete_end(self):
+        if self.start == None:
+            print("Nothing to delete")
+            return None
+        Current_Node = self.start
+        while Current_Node.next != self.tail:
+            Current_Node = Current_Node.next
+        Current_Node.next = None   
+        # free space?
+
+    def delete_any(self):
+        if self.start == None:
+            print("Nothing to delete")
+            return None
+        del_pos = inputInt("Please enter what you want to delete:\n")
+        i=1
+        if self.start.next == None:
+            print(f"Deleting {self.start.value}")
+            self.start = None
+            return None
+        prev = self.start
+        after = self.start.next
+        while i<del_pos-1 and after != None:
+            prev = after
+            after = after.next
+            i+=1
+        if i==del_pos-1:
+            print(f"Deleting:\t{after.value}")
+            prev.next = after.next
+            return None
+        print("Invalid Position")
+        # free space?
+
+    def length(self):
+        if self.start ==None:
+            print("Linked List is Empty")
+            return None
+        Current_Node = self.start
+        i=0
+        while Current_Node != None:
+            i+=1
+            Current_Node = Current_Node.next
+        # print(f"Length of the SLL is\t{i}")
+        return i
+
+    def traversal(self):
+        Current_Node = self.start
+        while Current_Node != None:
+            print(Current_Node.value)
+            Current_Node = Current_Node.next
+
+    def reversal(self):
+        if self.start ==None:
+            print("Nothing to reverse")
+            return None
+        Current_Node = self.start
+        # next_node = Current_Node.next
+        prev_node = None
+        while Current_Node != None:
+            next_node = Current_Node.next
+            Current_Node.next = prev_node
+            prev_node = Current_Node
+            Current_Node = next_node
+        self.start = prev_node
+        
+    def sort(self):
+        if self.start == None:
+            return None
+        prev_Node = self.start
+        next_node = self.start.next
+        while next_node != None:
+            if prev_Node.value > next_node.value:
+                temp = next_node.value
+                next_node.value = prev_Node.value
+                prev_Node.value = temp
+            else:
+                prev_Node = next_node
+                next_node = next_node.next
+            
+
+      
+First = Node(10)
+Second = Node(20)
+Third = Node(30)
+Fourth = Node(40)
+SLL = LinkedList()
+SLL.insert_at_beginning(First)
+SLL.insert_at_beginning(Second)
+SLL.insert_at_end(Third)
+SLL.insert_at_pos(Fourth)
+SLL.traversal()
+print(SLL.length())
+print("*"*50)
+SLL.delete_beg()
+SLL.traversal()
+print(SLL.length())
+SLL.reversal()
+SLL.traversal()
+SLL.sort()
+print("*"*30)
+SLL.traversal()
