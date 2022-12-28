@@ -1,0 +1,47 @@
+import tkinter
+import math
+
+mainwindow = tkinter.Tk()
+mainwindow.title("Parabola")
+mainwindow.geometry("640x480")
+
+def parabola(canvas_inside_parabola_func, size):
+    for x in range(size):
+        y = x*x/size 
+        plot_graph(canvas_inside_parabola_func, x, y)
+        plot_graph(canvas_inside_parabola_func, -x, y)
+        
+def circle(canvas_inside_circle_func, radius, g, h, colour="red"):
+    # for x in range(g * 100, (g+radius) * 100): # we're multiplying by 100 so that decimal values of x are used and more points are plotted
+    #     x/=100
+    #     y = h + (math.sqrt(radius**2 - (x-g)**2))
+    #     plot_graph(canvas_inside_circle_func, x, y)
+    #     plot_graph(canvas_inside_circle_func, x, 2*h-y)
+    #     plot_graph(canvas_inside_circle_func, 2*g-x, y)
+    #     plot_graph(canvas_inside_circle_func, 2*g-x, 2*h-y)
+    # the above code is very slow, so it's always better to use a method that's already present in the python source
+    canvas_inside_circle_func.create_oval(g + radius, h + radius, g-radius, h-radius, outline=colour, width=2)
+    
+    
+def x_y_axes(canvas_inside_axes_func):
+    canvas_inside_axes_func.update()
+    x_origin = canvas_inside_axes_func.winfo_width() / 2
+    y_origin = canvas_inside_axes_func.winfo_height() / 2
+    canvas_inside_axes_func.configure(scrollregion=(-x_origin, -y_origin, x_origin, y_origin))
+    canvas_inside_axes_func.create_line(-x_origin, 0, x_origin, 0, fill="black")
+    canvas_inside_axes_func.create_line(0, y_origin, 0, -y_origin, fill="black")
+    
+def plot_graph(canvas_inside_plot_func, x, y):
+    canvas_inside_plot_func.create_line(x, -y, x+1, -y+1, fill="red")
+
+canvas = tkinter.Canvas(mainwindow, width = 640, height = 480)
+canvas.grid(row=0, column=0)
+x_y_axes(canvas)
+
+parabola(canvas, 100)
+parabola(canvas, 200)
+circle(canvas, 100, 0, 0)
+
+
+mainwindow.mainloop()
+
