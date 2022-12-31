@@ -1,0 +1,55 @@
+import tkinter
+from tkinter.filedialog import askopenfilename, asksaveasfilename
+
+
+def save_as_file():
+    file_location = asksaveasfilename(
+        defaultextension="txt",
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+    )
+    if not file_location:
+        return
+    global text_entry_edit
+    with open(file_location, "w") as file_output:
+        text_entered = text_entry_edit.get(1.0, tkinter.END)
+        file_output.write(text_entered)
+    mainwindow.title(f"Generic Text Editor - {file_location}")
+    
+    
+def open_file():
+    global file_name
+    file_location = askopenfilename(
+        filetypes=[("Text Files", "*.txt"), ("All Files", "*.*")]
+    )
+    if not file_location:
+        return
+    file_name = file_location
+    text_entry_edit.delete(1.0, tkinter.END)
+    with open(file_location, "r") as file_input:
+        text = file_input.read()
+        text_entry_edit.insert(tkinter.END, text)
+    mainwindow.title(f"Generic Text Editor - {file_location}")
+
+
+# mainwindow_padding = 10
+file_name = ""
+mainwindow = tkinter.Tk()
+mainwindow.geometry("640x480")
+mainwindow.title("Generic Text Editor - Untitled")
+# mainwindow["padx"] = mainwindow_padding
+mainwindow.columnconfigure(1,weight=1, minsize=480)  #TODO ADD MINSIZE, CHANGE WEIGHT
+mainwindow.rowconfigure(0, weight=1, minsize=480)  #TODO ADD MINSIZE, CHANGE WEIGHT
+
+text_entry_edit = tkinter.Text(mainwindow)
+text_entry_edit.grid(row=0, column=1, sticky="nsew")
+frame_of_options = tkinter.Frame(mainwindow, relief=tkinter.RAISED, bd=3)
+# frame_of_options.pack(side='left', anchor='n', fill=tkinter.Y,expand=False)
+frame_of_options.grid(row=0, column=0, sticky="nsew")
+
+open_button = tkinter.Button(frame_of_options, text="Open File", command=open_file)
+open_button.grid(row=0, column=0, padx=5, pady=5)
+
+save_as_button = tkinter.Button(frame_of_options, text="Save As", command=save_as_file)
+save_as_button.grid(row=1, column=0, padx=5)
+
+mainwindow.mainloop()
