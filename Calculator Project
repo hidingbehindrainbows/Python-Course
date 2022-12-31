@@ -1,0 +1,100 @@
+import tkinter
+
+def press(num):
+    global expression
+    # add the number to the expression
+    expression += str(num)
+    equation.set(expression)
+    
+
+def equals_to():
+    # try/except to make sure the expression is actually evaluatable. So, dividing by 0, and other invalid expression lead to Error!! in the entry
+    try:
+        global expression
+        total = str(eval(expression))
+        equation.set(total)
+        expression = ""
+    except:
+        equation.set("Error!!")
+        expression = ""
+    
+
+def clear():
+    """clears the equation entry"""
+    global expression 
+    expression = ""
+    equation.set(expression)
+
+
+def backspace()->None:  
+    """remove the last digit/operand from the equation"""
+    global expression
+    if expression:  #checks if the expression is not empty, if it is, it calls the clear function
+        last_number = expression[len(expression)-1] # get the length of the expression and use it to get the last letter
+        expression = expression.replace(last_number, "") # use the built in replace function to replace the last digit/operand with ""
+        equation.set(expression)
+    else:
+        clear()
+    
+
+keys = [
+        [('C',1), ('CE',1), ('(', 1), (')', 1)],
+        [('7',1), ('8', 1), ('9', 1), ('+', 1)],
+        [('4',1), ('5', 1), ('6', 1), ('-', 1)],
+        [('1',1), ('2', 1), ('3', 1), ('*', 1)],
+        [('0',1), ('=', 1), ('/', 1)],
+        ]
+
+dict_of_commands = {
+    1: lambda: backspace(),
+    2: lambda: clear(),
+    3: lambda: press('('),
+    4: lambda: press(')'),
+    5: lambda: press(7),
+    6: lambda: press(8),
+    7: lambda: press(9),
+    8: lambda: press('+'),
+    9: lambda: press(4),
+    10: lambda: press(5),
+    11: lambda: press(6),
+    12: lambda: press('-'),
+    13: lambda: press(1),
+    14: lambda: press(2),
+    15: lambda: press(3),
+    16: lambda: press('*'),
+    17: lambda: press(0),
+    18: lambda: equals_to(),
+    19: lambda: press('/'),
+}
+
+mainwindow_padding = 10
+
+mainwindow = tkinter.Tk()
+mainwindow.title("The Book Keeper") # Cool Stats; Calculator
+mainwindow.geometry("640x480-8-200")
+mainwindow['padx'] = mainwindow_padding
+
+equation = tkinter.StringVar() # the equation  
+expression = ""
+
+entry = tkinter.Entry(mainwindow, textvariable=equation, font = ('Verdana', 20)) # this is where the calculater numbers and expressions appear
+entry.grid(row=0, column=0, sticky="nsew")
+
+keyPad = tkinter.Frame(mainwindow) # holds all the keys
+keyPad.grid(row=1, column=0, sticky="nsew")
+
+row_ref = 0
+dict_index_ref = 1
+for row_of_keys in keys:
+    column_ref = 0
+    for key in row_of_keys:
+        tkinter.Button(keyPad, text=key[0], height=2, width=10, command=dict_of_commands.get(dict_index_ref)).grid(row=row_ref, column = column_ref, columnspan=key[1], sticky=tkinter.E + tkinter.W)
+        column_ref+=1
+        dict_index_ref += 1
+    row_ref+=1
+
+mainwindow.update()
+mainwindow.minsize(keyPad.winfo_width() + mainwindow_padding, entry.winfo_height() + keyPad.winfo_height())
+mainwindow.maxsize(keyPad.winfo_width() + 50+mainwindow_padding, entry.winfo_height() + 100+ keyPad.winfo_height()) # sets up the max size to be 50 pixesl moer than the minsize
+
+mainwindow.mainloop()
