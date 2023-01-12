@@ -1,0 +1,87 @@
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.prev = None
+        self.next = None
+
+
+class DLL:
+    def __init__(self):
+        self.start = None
+        self.tail = None
+    
+    def insert_beg(self, current_node):
+        if self.start == None:
+            self.start = self.tail = current_node
+            return
+        current_node.next = self.start
+        self.start.prev = self.start =  current_node
+    
+    def insert_end(self, current_node):
+        if self.start == None:
+            self.start = self.tail = current_node
+            return
+        self.tail.next = current_node
+        current_node.prev = self.tail
+        self.tail = current_node
+    
+    def delete_beg(self):
+        if self.start == None:
+            print("Nothing to delete")
+            return
+        self.start = self.start.next
+        self.start.prev = None
+    
+    def delete_end(self):
+        if self.start == None:
+            print("Nothing to delete")
+            return
+        self.tail = self.tail.prev
+        self.tail.next = None
+    
+    def reversal(self):
+        if self.start == None:
+            print("Nothing to show")
+            return
+        temporary = self.tail
+        while temporary:
+            print(temporary.value)
+            temporary = temporary.prev
+    
+    def sort(self):
+        if self.start == None:
+            print("Nothing to sort")
+            return
+        # not done
+    
+    def traverse(self):
+        if self.start == None:
+            print("Nothing to show")
+            return
+        temporary = self.start
+        while temporary:
+            print(temporary.value)
+            temporary = temporary.next
+
+
+First = Node(1)
+Second = Node(2)
+Third = Node(3)
+Fourth = Node(4)
+
+doubly = DLL()
+doubly.insert_end(First)
+doubly.insert_end(Second)
+doubly.insert_end(Third)
+doubly.insert_end(Fourth)
+
+# doubly.traverse()
+
+# doubly.delete_beg()
+# doubly.traverse()
+
+
+# doubly.delete_end()
+# doubly.traverse()
+
+doubly.reversal()
