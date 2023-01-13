@@ -1,3 +1,6 @@
+from pyinputplus import inputInt
+
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -9,53 +12,121 @@ class DLL:
     def __init__(self):
         self.start = None
         self.tail = None
-    
+
     def insert_beg(self, current_node):
-        if self.start == None:
+        if not self.start:
             self.start = self.tail = current_node
             return
         current_node.next = self.start
-        self.start.prev = self.start =  current_node
-    
+        self.start.prev =  current_node
+        self.start = current_node
+
     def insert_end(self, current_node):
-        if self.start == None:
+        if not self.start:
             self.start = self.tail = current_node
             return
         self.tail.next = current_node
         current_node.prev = self.tail
         self.tail = current_node
-    
+
+    def insert_any(self, current_node):
+        if not self.start:
+            self.start = self.tail =  current_node
+            return
+        travel = self.start
+        pos = inputInt("Enter position\t")
+        index = 0
+        if pos==1:
+            self.insert_beg(current_node)
+            return
+        while travel and index < pos-1:
+            index +=1
+            travel = travel.next
+        if index == pos-1 and travel:
+            if not self.start.next:
+                self.tail = current_node
+                self.start.next = self.tail
+                self.tail.prev = self.prev
+                return
+            if travel == self.tail:
+                current_node.prev = self.tail.prev
+                current_node.next = self.tail
+                self.tail.prev.next = self.tail.prev = current_node
+                return
+            current_node.next = travel.next
+            travel.next.prev = current_node
+            travel.next = current_node
+            current_node.prev = travel
+            return
+        elif index == pos-1 and not travel:
+            self.insert_end(current_node)
+            return
+        print("Invalid")
+
     def delete_beg(self):
-        if self.start == None:
+        if not self.start:
             print("Nothing to delete")
             return
         self.start = self.start.next
         self.start.prev = None
-    
+
     def delete_end(self):
-        if self.start == None:
+        if not self.start:
             print("Nothing to delete")
             return
         self.tail = self.tail.prev
         self.tail.next = None
-    
+
+    def delete_specific(self):
+        if not self.start:
+            print("Invalid")
+            return
+        travel = self.start
+        ele = inputInt("Enter element to delete\t")
+        if self.start.value == ele:
+            self.delete_beg()
+            return
+        while travel and travel.value != ele:
+            travel = travel.next
+
+        if travel.value == ele:
+            if not self.start.next:
+                self.start = self.tail = None
+                return
+            if travel == self.tail:
+                self.delete_end()
+                return
+            travel.prev.next = travel.next
+            travel.next.prev = travel.prev
+            return
+        print("Invalid")
+
     def reversal(self):
-        if self.start == None:
+        if not self.start:
             print("Nothing to show")
             return
         temporary = self.tail
         while temporary:
             print(temporary.value)
             temporary = temporary.prev
-    
+
     def sort(self):
-        if self.start == None:
+        if not self.start:
             print("Nothing to sort")
             return
-        # not done
-    
+        prev_Node = self.start
+        while prev_Node.next:
+            temp = prev_Node
+            while temp.next:
+                if temp.value > temp.next.value:
+                    change = temp.next.value
+                    temp.next.value = temp.value
+                    temp.value = change
+                temp = temp.next
+            prev_Node = prev_Node.next
+
     def traverse(self):
-        if self.start == None:
+        if not self.start:
             print("Nothing to show")
             return
         temporary = self.start
@@ -68,12 +139,13 @@ First = Node(1)
 Second = Node(2)
 Third = Node(3)
 Fourth = Node(4)
+Fifth = Node(5)
 
 doubly = DLL()
 doubly.insert_end(First)
-doubly.insert_end(Second)
-doubly.insert_end(Third)
 doubly.insert_end(Fourth)
+doubly.insert_end(Third)
+doubly.insert_beg(Second)
 
 # doubly.traverse()
 
@@ -84,4 +156,14 @@ doubly.insert_end(Fourth)
 # doubly.delete_end()
 # doubly.traverse()
 
-doubly.reversal()
+# doubly.reversal()
+doubly.traverse()
+doubly.sort()
+print("*"*50)
+doubly.traverse()
+
+doubly.insert_any(Fifth)
+doubly.traverse()
+
+doubly.delete_specific()
+doubly.traverse()
