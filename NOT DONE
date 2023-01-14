@@ -1,0 +1,26 @@
+        # first = board[0]
+        last = len(board)-1
+        pos_of_o = []
+        for index_here1, letter_box in enumerate(board):
+            if index_here1 != 0 and index_here1 != last:
+                if "O" in letter_box:
+                    count = letter_box.count("O")
+                    while count:
+                        count-=1
+                        index_here = letter_box.index("O")
+                        if index_here1==1:
+                            if board[index_here1-1][index_here]=="O":
+                                continue
+                            else:
+                                if index_here != 0 and index_here !=len(letter_box)-1:
+                                    # print("X")
+                                    letter_box[index_here] = "X"
+                        elif index_here1+1==last:
+                            if board[index_here1+1][index_here]=="O":
+                                continue
+                            else:
+                                if index_here != 0 and index_here !=len(letter_box)-1:
+                                    letter_box[index_here] = "X"
+                        else:
+                            if index_here != 0 and index_here !=len(letter_box)-1:
+                                letter_box[index_here] = "X"
