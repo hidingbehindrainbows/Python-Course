@@ -1,0 +1,180 @@
+from pyinputplus import inputInt
+
+class Node(object):
+    def __init__(self, value):
+        self.value = value
+        self.next = self
+        self.prev = self
+
+
+class CLL(object):
+    def __init__(self):
+        self.start = None
+        self.tail = None
+
+    def insert_beg(self, node):
+        if not self.start:
+            self.start = node
+            self.tail = node
+            return
+        node.next = self.start
+        node.prev = self.tail
+        self.start.prev = node
+        self.tail.next = node
+        self.start = node
+
+    def insert_end(self, node):
+        if not self.start:
+            self.start = node
+            self.tail = node
+            return
+        node.prev = self.tail
+        node.next = self.start
+        self.start.prev = node
+        self.tail.next = node
+        self.tail = node
+
+    def insert_any(self, node):
+        if not self.start:
+            self.insert_end(node)
+            return
+        travel = self.start
+        pos = inputInt("Enter position:\n")
+        index = 0
+        if pos == 1:
+            self.insert_beg(node)
+            return
+        while travel.next!=self.start and index < pos-1:
+            index +=1
+            travel = travel.next
+        if index == pos-1 and travel.next != self.start:
+            if self.start.next == self.start:
+                self.insert_end(node)
+                return
+            if travel == self.tail:
+                node.prev = self.tail.prev
+                node.prev.next = node
+                node.next = self.tail
+                self.tail.prev = node
+                return
+            node.next = travel.next
+            node.prev = travel.prev
+            travel.prev.next = node
+            travel.prev = node
+            return
+        if index == pos-1 and travel.next == self.start:
+            self.insert_end(node)
+            return
+        print("Invalid")
+
+    def delete_beg(self):
+        if not self.start:
+            print("Nothing to delete")
+            return
+        self.start.next.prev = self.tail
+        self.tail.next = self.start.next
+        self.start = self.start.next
+
+    def delete_end(self):
+        if not self.start:
+            print("Nothing to delete")
+            return
+        self.tail.prev.next = self.start
+        self.start.prev = self.tail.prev
+        self.tail = self.tail.prev
+
+    def delete_specific(self):
+        if not self.start:
+            print("Nothing to delete")
+            return 
+        travel = self.start
+        ele = inputInt("Enter element to delete:\n")
+        if self.start.value == ele:
+            self.delete_beg()
+            return
+        while travel.next!= self.start and travel.value != ele:
+            travel = travel.next
+        if travel.value == ele:
+            # this immediate if statement is pretty much unreachable
+            if self.start.next == self.start:
+                self.delete_beg()
+                return 
+            if travel == self.tail:
+                self.delete_end()
+                return
+            travel.prev.next = travel.next
+            travel.next.prev = travel.prev
+            return
+        print("Invalid")
+
+    def traverse(self):
+        if not self.start:
+            print("Nothing to show")
+            return
+        temp = self.start
+        while temp.next != self.start:
+            print(temp.value)
+            temp = temp.next
+        print(temp.value)
+
+    def reversal(self):
+        if not self.start:
+            print("Nothing to reverse")
+            return
+        temp = self.tail
+        while temp.prev!=self.tail:
+            print(temp.value)
+            temp = temp.prev
+        print(temp.value)
+
+    def sort(self):
+        if not self.start:
+            print("Nothing to sort")
+            return
+        ref_node = self.start
+        while ref_node.next != self.start:
+            temp = ref_node
+            while temp.next != self.start:
+                if temp.value > temp.next.value:
+                    change = temp.next.value
+                    temp.next.value = temp.value
+                    temp.value = change
+                temp = temp.next
+            ref_node = ref_node.next
+
+
+first = Node(1)
+second = Node(2)
+third = Node(3)
+fourth = Node(4)
+fifth = Node(5)
+sixth = Node(6)
+seventh = Node(7)
+
+circle = CLL()
+circle.insert_beg(first)
+circle.insert_beg(second)
+circle.insert_end(third)
+circle.insert_end(fourth)
+circle.insert_end(fifth)
+circle.insert_beg(sixth)
+circle.traverse()
+print("*" * 50)
+
+circle.insert_any(seventh)
+
+circle.delete_specific()
+
+
+circle.reversal()
+print("*" * 50)
+circle.delete_beg()
+circle.delete_end()
+circle.traverse()
+print("*" * 50)
+circle.reversal()
+circle.sort()
+print("*" * 50)
+circle.traverse()
+print("*" * 50)
+circle.reversal()
