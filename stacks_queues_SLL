@@ -1,0 +1,73 @@
+import pyinputplus
+
+
+class Node:
+    def __init__(self, value):
+        self.value = value
+        self.next = None
+
+
+class Stack_or_Queue_SLL:
+    def __init__(self):
+        self.start = None
+        self.tail = None
+        self.type = None
+
+    def stack_insert(self, node):
+        """ Same as the insert_beg program in singly_linked_list.py"""
+        choice = None
+        if not self.start:
+            choice = pyinputplus.inputInt("Stack or queue? 0 for stack")
+            if choice:
+                self.type = "Queue"
+            else:
+                self.type = "Stack"
+            self.start = node
+            self.tail = node
+            return
+        if choice or self.type=="Queue":
+            self.type = "Queue"
+            self.insert_queue(node)
+            return
+        #elif
+        node.next = self.start
+        self.start = node
+
+    def insert_queue(self, node):
+        """ Same as the insert_end function in singly_linked_list.py """
+        # a lot of the functionality is taken care of by stack_insert
+        self.tail.next = node
+        self.tail = node
+    
+    def delete_queue_and_stack(self):
+        """ same as delete_beg in singly_linked_list.py """
+        if not self.start:
+            print("Nothing to delete")
+            return
+        self.start = self.start.next
+    
+    def traverse(self):
+        """Same as the print program in singly_linked_list.py"""
+        if not self.start:
+            print("Nothing to show")
+            return
+        travel = self.start
+        while travel:
+            print(travel.value)
+            travel = travel.next
+
+def default():
+    print("Invalid")
+
+stack_and_queue = Stack_or_Queue_SLL()
+choices = {
+    1: lambda :stack_and_queue.stack_insert(Node(pyinputplus.inputInt("Enter vaue:\n"))),
+    2: stack_and_queue.delete_queue_and_stack,
+    3: stack_and_queue.traverse,
+    4: exit,
+}
+
+while True:
+    print("1. Insert\n2. Delete\n3. Display\n 4. Exit\n")
+    choice = pyinputplus.inputInt("What do you want to do?")
+    choices.get(choice, default)()
