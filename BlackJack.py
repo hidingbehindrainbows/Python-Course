@@ -2,7 +2,6 @@ import tkinter
 import random
 from  pyinputplus import inputInt
 
-
 def load_images(card_images):
     suits = ['heart', 'club', 'diamond', 'spade',]
     face_cards = ['jack', 'queen', 'king']
