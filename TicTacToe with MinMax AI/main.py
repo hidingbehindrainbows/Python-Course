@@ -1,5 +1,5 @@
 import random
-from idea import findBestMove
+from minmaxalgo import findBestMove
 
 def win(dict3):
     if dict3[1] == dict3[2] == dict3[3]  != '':
